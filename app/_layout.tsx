@@ -1,24 +1,33 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
+import { theme } from '../constants/theme';
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <Stack
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: theme.colors.darkest,
+        },
+        headerTintColor: theme.colors.white,
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+        // عشان نشيل الخط الفاصل بتاع الهيدر
+        headerShadowVisible: false, 
+      }}
+    >
+      <Stack.Screen 
+        name="index" 
+        options={{ title: 'الرئيسية' }} 
+      />
+      <Stack.Screen 
+        name="morning" 
+        options={{ title: 'أذكار الصباح' }} 
+      />
+      <Stack.Screen 
+        name="evening" 
+        options={{ title: 'أذكار المساء' }} 
+      />
+    </Stack>
   );
 }
